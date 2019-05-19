@@ -1,46 +1,138 @@
 import 'package:flutter/material.dart';
+import 'package:flywit/ui/dialogs/boss_dialog.dart' as bossDialog;
 
-class GeneralDialog {
-
-}
+class GeneralDialog {}
 
 class FlightDialog {
-
+  takeOver(
+    BuildContext context,
+  ) {
+    bossDialog.showBossDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return SimpleDialog();
+        });
+  }
 
   Future<Null> destinationDialog(BuildContext context) {
-
-    return showDialog<Null>(
+    return bossDialog.showBossDialog<Null>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return Theme(
           data: Theme.of(context)
-              .copyWith(dialogBackgroundColor: Colors.blue.shade50),
-          child: new SimpleDialog(
-
-            contentPadding: const EdgeInsets.all(20.0),
-            children: <Widget>[
-              new Text(
-                "Lekan" ?? '',
-                textAlign: TextAlign.center,
-                style: new TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor),
-              ),
-              SizedBox(height: 20.0,),
-
-              new Container(
-                padding: const EdgeInsets.all(5.0),
-                child: new Text(
-                  'Cos Wnna',
-                  textAlign: TextAlign.center,
-                  style: new TextStyle(fontSize: 12.0, color: Colors.black54),
+              .copyWith(dialogBackgroundColor: Color(0xFFFAFAFA)),
+          child: new bossDialog.SimpleDialog(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+            titlePadding: EdgeInsets.all(10.0),
+            title: Container(
+              child: TextFormField(
+                controller: TextEditingController(text: ""),
+                style: TextStyle(
+                  fontSize: 13.0,
+                ),
+                decoration: InputDecoration(
+                  hintText: "Select Destination",
+                  contentPadding: EdgeInsets.all(
+                    18.0,
+                  ),
+                  prefixIcon: Icon(
+                    Icons.flight_takeoff,
+                    size: 18.0,
+                  ),
+                  suffixIcon: Icon(
+                    Icons.clear,
+                    size: 14.0,
+                    color: Colors.grey.shade300,
+                  ),
                 ),
               ),
-
-              SizedBox(height: 30.0,),
-              FlatButton(
+            ),
+            children: <Widget>[
+              new Container(
+                padding: const EdgeInsets.all(8.0),
+                alignment: Alignment.centerLeft,
+                child: new Text(
+                  'Results...',
+                  textAlign: TextAlign.center,
+                  style: new TextStyle(
+                      fontSize: 12.0, color: Theme.of(context).accentColor),
+                ),
+              ),
+              SizedBox(
+                height: 0.0,
+              ),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Dubia (DXB)",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                    Text(
+                      "Subia International Airport (DXB)",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Dubia (DXB)",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                    Text(
+                      "Subia International Airport (DXB)",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Dubia (DXB)",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                    Text(
+                      "Subia International Airport (DXB)",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              /*FlatButton(
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
                 },
@@ -49,14 +141,105 @@ class FlightDialog {
                 textColor: Colors.white70,
                 padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
                 shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
-              )
+              ),*/
             ],
           ),
         );
       },
     );
-
   }
+
+  Future<String> cabinDialog(BuildContext context) {
+    return bossDialog.showBossDialog(
+        context: context,
+        builder: (context) {
+          return bossDialog.SimpleDialog(
+            children: <Widget>[
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, "Economy");
+                },
+                child: Container(
+                    padding: EdgeInsets.all(
+                      10.0,
+                    ),
+                    child: const Text('Economy')),
+              ),
+              Divider(),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, "Premium Economy");
+                },
+                child: Container(
+                    padding: EdgeInsets.all(
+                      10.0,
+                    ),
+                    child: const Text('Premium Economy')),
+              ),
+              Divider(),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, "Business");
+                },
+                child: Container(
+                    padding: EdgeInsets.all(
+                      10.0,
+                    ),
+                    child: const Text('Business')),
+              ),
+              Divider(),
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, "First Class");
+                },
+                child: Container(
+                    padding: EdgeInsets.all(
+                      10.0,
+                    ),
+                    child: const Text('First Class')),
+              )
+            ],
+          );
+        });
+  }
+
+  /*Widget selectedDate(BuildContext context) {
+
+    return showDialog(context: context, builder: (context) {
+
+      return showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        // DateTime(2018),
+        lastDate: DateTime(2030),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData.dark(),
+            child: child,
+          );
+        },
+      );
+
+    });
+
+  }*/
 
 
 }
+
+
+/*
+* Container(
+                height: 200.0,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      child: Text("Item $index"),
+                    );
+                  },
+                ),
+              ),
+* */

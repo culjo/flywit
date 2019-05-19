@@ -22,6 +22,17 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
         accentColor: Color(0xffe67e22),
+        inputDecorationTheme: InputDecorationTheme(
+//      fillColor: Colors.white10,
+          filled: true,
+          isDense: true,
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            gapPadding: 0.0,
+          ),
+          border: InputBorder.none, // OutlineInputBorder()
+          hintStyle: TextStyle(fontSize: 13.0, )// ,
+        ),
       ),
       home: HomeScreen(), // MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -57,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+
     });
   }
 
