@@ -11,8 +11,8 @@ class FlightService {
 
   NetworkUtil networkUtil = NetworkUtil();
   static const String TOKEN_URL = "https://test.api.amadeus.com/v1/security/oauth2/token";
-  static const String CLIENT_SECRET = "noPX4LEv2j2c5pPd";
-  static const String CLIENT_ID = "9EUyDJvzfPDs57kucVPODMtsYALPtmMN";
+  static const String CLIENT_SECRET = "0hf6Ahxc60p6X08m"; // "noPX4LEv2j2c5pPd";
+  static const String CLIENT_ID = "o1MRwml44mAKAgDpo0LAqvXvR2bKprcb"; // "9EUyDJvzfPDs57kucVPODMtsYALPtmMN";
   static const String GRANT_TYPE = "client_credentials";
   static const int STATUS_OK = 200;
   static const String BASE_URL = "test.api.amadeus.com";

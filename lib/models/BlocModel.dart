@@ -1,4 +1,3 @@
-
 import 'package:flywit/models/ErrorModel.dart';
 
 class BlocModel<T>

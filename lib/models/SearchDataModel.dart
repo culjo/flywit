@@ -1,5 +1,7 @@
 class SearchDataModel {
   List<SearchData> data;
+  Map<String, dynamic> dictionaries;
+  Meta meta;
 
   SearchDataModel({this.data});
 
@@ -10,6 +12,11 @@ class SearchDataModel {
         data.add(new SearchData.fromJson(v));
       });
     }
+
+    dictionaries = json['dictionaries'] != null
+        ? json['dictionaries'] // new Dictionaries.fromJson(json['dictionaries'])
+        : null;
+    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -334,3 +341,39 @@ class PricePerAdult {
   }
 }
 
+class Meta {
+  Links links;
+  String currency;
+
+  Meta({this.links, this.currency});
+
+  Meta.fromJson(Map<String, dynamic> json) {
+    links = json['links'] != null ? new Links.fromJson(json['links']) : null;
+    currency = json['currency'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.links != null) {
+      data['links'] = this.links.toJson();
+    }
+    data['currency'] = this.currency;
+    return data;
+  }
+}
+
+class Links {
+  String self;
+
+  Links({this.self});
+
+  Links.fromJson(Map<String, dynamic> json) {
+    self = json['self'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['self'] = this.self;
+    return data;
+  }
+}

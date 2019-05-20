@@ -16,7 +16,7 @@ class FlightDialog {
   }
 
   Future<String> destinationDialog(BuildContext context) {
-    return bossDialog.showBossDialog<Null>(
+    return bossDialog.showBossDialog<String>(
       context: context,
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
@@ -63,85 +63,65 @@ class FlightDialog {
               SizedBox(
                 height: 0.0,
               ),
-              Container(
-                padding: EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Dubia (DXB)",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade600,
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, "NYC");
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "New York (NYC)",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade600,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Subia International Airport (DXB)",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13.0,
+                      Text(
+                        "New york city(JFK)",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 13.0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Dubia (DXB)",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade600,
+              SimpleDialogOption(
+                onPressed: () {
+                  Navigator.pop(context, "MAD");
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Madrid (MAD)",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade600,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Subia International Airport (DXB)",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13.0,
+                      Text(
+                        "Barajas (MAD)",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 13.0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Dubia (DXB)",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                    Text(
-                      "Subia International Airport (DXB)",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
               SizedBox(
                 height: 10.0,
               ),
-              /*FlatButton(
-                onPressed: () {
-                  Navigator.of(context, rootNavigator: true).pop();
-                },
-                child: Text('OK'),
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white70,
-                padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-                shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(6.0)),
-              ),*/
+
             ],
           ),
         );

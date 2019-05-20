@@ -5,6 +5,7 @@ import 'package:flywit/ui/custom/number_spinner.dart';
 import 'package:flywit/ui/custom/page_slide_transition.dart';
 import 'package:flywit/ui/dialogs/general_dialogs.dart';
 import 'package:flywit/ui/flights/flight_results.dart';
+import 'package:intl/intl.dart';
 
 
 enum CabinType {
@@ -24,16 +25,17 @@ class _HomeScreenState extends State {
   SearchFlightBloc searchFlightBloc;
 
   Map<String, String> params = {
-    "origin": "",
-    "destination": "",
-    "departureDate": "",
+    "origin": "NYC",
+    "destination": "MAD",
+    "departureDate": "2019-08-01",
     "travelClass": "ECONOMY",
     "adults": "1",
-    "currency": "ngn"
-
+    "currency": "ngn",
+    "max": "20"
   };
 
   String cabin = "";
+  DateTime selectedDate = DateTime.now();
 
   @override
   void initState() {
@@ -123,7 +125,7 @@ class _HomeScreenState extends State {
                                           height: 5.0,
                                         ),
                                         Text(
-                                          "Lagos-Murtala Mohamed",
+                                          params["origin"],
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -135,42 +137,47 @@ class _HomeScreenState extends State {
                               ),
                             ),
                             Divider(),
-                            Container(
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(right: 13.0, left: 4.0),
-                                    child: Icon(
-                                      Icons.location_on,
-                                      size: 14.0,
-                                      color: Colors.lightBlue,
+                            InkWell(
+                              onTap: () {
+                                FlightDialog().destinationDialog(context);
+                              },
+                              child: Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(right: 13.0, left: 4.0),
+                                      child: Icon(
+                                        Icons.location_on,
+                                        size: 14.0,
+                                        color: Colors.lightBlue,
+                                      ),
                                     ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "To",
-                                        style: TextStyle(
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          "To",
+                                          style: TextStyle(
 //                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.0,
-                                          color: Colors.blueGrey.shade400,
+                                            fontSize: 12.0,
+                                            color: Colors.blueGrey.shade400,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 5.0,
-                                      ),
-                                      Text(
-                                        "Lagos-Murtala Mohamed",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                        SizedBox(
+                                          height: 5.0,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                        Text(
+                                          params["destination"],
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -184,7 +191,14 @@ class _HomeScreenState extends State {
                           child: IconButton(
                             icon: Icon(Icons.import_export),
                             color: Colors.black54,
-                            onPressed: () {},
+                            onPressed: () {
+
+                              var origin = params["origin"];
+                              params["origin"] = params["destination"];
+                              params["destination"] = origin;
+                              setState(() {});
+
+                            },
                           ),
                         ),
                       )
@@ -202,15 +216,15 @@ class _HomeScreenState extends State {
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2019, DateTime.now().month, DateTime.now().day),
-                      // DateTime(2018),
-                      lastDate: DateTime(2030),
-                      /*builder: (BuildContext context, Widget child) {
-                        return Theme(
-                          data: ThemeData.dark(),
-                          child: child,
-                        );
-                      },*/
-                    );
+                      lastDate: DateTime(2030)
+                    ).then((datetime) {
+                      //print(datetime);
+                      params["departureDate"] = "${datetime.year}-${datetime.month}-${datetime.day}";
+
+                      setState(() {
+                        selectedDate = datetime;
+                      });
+                    });
 
                   },
                   child: Row(
@@ -261,7 +275,7 @@ class _HomeScreenState extends State {
                               ),
                               SizedBox(height: 5.0),
                               Text(
-                                cabin.toUpperCase(),
+                                params["travelClass"].toUpperCase(),
                                 style: TextStyle(
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.bold,
@@ -295,7 +309,8 @@ class _HomeScreenState extends State {
                     ),
                     buildPassenger("Adult (12+)", (value){
                       print(value);
-                    }),
+                      params["adults"] = value.toString();
+                    }, min: 1, initialValue: 1),
                     buildPassenger("Children (2-12)", (value) {
                       print(value);
                     }),
@@ -334,14 +349,14 @@ class _HomeScreenState extends State {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "MAY",
+                    DateFormat.MMM().format(selectedDate),
                     style: TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
-                    "Friday",
+                    DateFormat.EEEE().format(selectedDate),
                     style: TextStyle(
                       fontSize: 11.0,
                       fontWeight: FontWeight.w600,
@@ -353,7 +368,7 @@ class _HomeScreenState extends State {
                 width: 6.0,
               ),
               Text(
-                "24",
+                DateFormat.d().format(selectedDate),
                 style: TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.w600,
@@ -366,7 +381,7 @@ class _HomeScreenState extends State {
     );
   }
 
-  Widget buildPassenger(String title, ValueChanged<num> onChanged) {
+  Widget buildPassenger(String title, ValueChanged<num> onChanged, {min = 0, initialValue = 0}) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -380,7 +395,7 @@ class _HomeScreenState extends State {
             ),
           ),
           SizedBox(height: 5.0),
-          NumberSpinner(onValueChanged: onChanged,)
+          NumberSpinner(initialValue: initialValue, min: min, onValueChanged: onChanged,)
         ],
       ),
     );
