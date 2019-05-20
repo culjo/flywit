@@ -15,7 +15,7 @@ class FlightDialog {
         });
   }
 
-  Future<Null> destinationDialog(BuildContext context) {
+  Future<String> destinationDialog(BuildContext context) {
     return bossDialog.showBossDialog<Null>(
       context: context,
       barrierDismissible: true, // user must tap button!
