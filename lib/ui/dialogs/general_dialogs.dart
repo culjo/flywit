@@ -137,46 +137,46 @@ class FlightDialog {
             children: <Widget>[
               SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, "Economy");
+                  Navigator.pop(context, "ECONOMY");
                 },
                 child: Container(
                     padding: EdgeInsets.all(
                       10.0,
                     ),
-                    child: const Text('Economy')),
+                    child: const Text('ECONOMY')),
               ),
               Divider(),
               SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, "Premium Economy");
+                  Navigator.pop(context, "PREMIUM ECONOMY");
                 },
                 child: Container(
                     padding: EdgeInsets.all(
                       10.0,
                     ),
-                    child: const Text('Premium Economy')),
+                    child: const Text('PREMIUM ECONOMY')),
               ),
               Divider(),
               SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, "Business");
+                  Navigator.pop(context, "BUSINESS");
                 },
                 child: Container(
                     padding: EdgeInsets.all(
                       10.0,
                     ),
-                    child: const Text('Business')),
+                    child: const Text('BUSINESS')),
               ),
               Divider(),
               SimpleDialogOption(
                 onPressed: () {
-                  Navigator.pop(context, "First Class");
+                  Navigator.pop(context, "FIRST CLASS");
                 },
                 child: Container(
                     padding: EdgeInsets.all(
                       10.0,
                     ),
-                    child: const Text('First Class')),
+                    child: const Text('FIRST CLASS')),
               )
             ],
           );

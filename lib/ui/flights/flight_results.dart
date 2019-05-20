@@ -46,78 +46,76 @@ class _FlightResultState extends State<FlightResultsScreen> {
     primary = Theme.of(context).primaryColor;
     accent = Theme.of(context).accentColor;
 
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: Colors.blueGrey.shade50,
-          body: CustomScrollView(
-            controller: scrollController,
-            slivers: <Widget>[
-              SliverAppBar(
-                pinned: false,
-                snap: true,
-                floating: true,
-                centerTitle: true,
-                title: Container(
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        widget.searchParams["origin"],
-                        style: TextStyle(fontSize: 14.0),
-                      ),
-                      Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Icon(
-                            Icons.flight_takeoff,
-                            size: 18.0,
-                            color: Colors.white,
-                          )),
-                      Text(widget.searchParams["destination"],
-                          style: TextStyle(fontSize: 14.0)),
-                    ],
-                  ),
+    return Scaffold(
+        backgroundColor: Colors.blueGrey.shade50,
+        body: CustomScrollView(
+          controller: scrollController,
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: false,
+              snap: true,
+              floating: true,
+              centerTitle: true,
+              title: Container(
+                alignment: Alignment.center,
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      widget.searchParams["origin"],
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                    Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Icon(
+                          Icons.flight_takeoff,
+                          size: 18.0,
+                          color: Colors.white,
+                        )),
+                    Text(widget.searchParams["destination"],
+                        style: TextStyle(fontSize: 14.0)),
+                  ],
                 ),
               ),
-              SliverToBoxAdapter(
-                  child: ValueListenableBuilder(
-                      valueListenable: resultListener,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2.0,
-                      ),
-                      builder: (context, BlocModel result, Widget child) {
-                        if (result.processing)
-                          return Container(
-                              height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width,
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ));
-                        else if (result.model is ErrorModel) {
-                          ErrorModel errorModel = result.model;
-                          return Container(
+            ),
+            SliverToBoxAdapter(
+                child: ValueListenableBuilder(
+                    valueListenable: resultListener,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.0,
+                    ),
+                    builder: (context, BlocModel result, Widget child) {
+                      if (result.processing)
+                        return Container(
                             height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width,
                             child: Center(
-                              child: Text("${errorModel.errors[0].detail}"),
-                            ),
-                          );
-                        } else {
-                          SearchDataModel searchDataModel =
-                          result.model as SearchDataModel;
+                              child: CircularProgressIndicator(),
+                            ));
+                      else if (result.model is ErrorModel) {
+                        ErrorModel errorModel = result.model;
+                        return Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child: Center(
+                            child: Text("${errorModel.errors[0].detail}"),
+                          ),
+                        );
+                      } else {
+                        SearchDataModel searchDataModel =
+                        result.model as SearchDataModel;
 
-                          return ListView.builder(
-                            controller: scrollController,
-                            shrinkWrap: true,
-                            itemCount: searchDataModel.data.length,
-                            itemBuilder: (context, index) {
-                              return buildListItem(searchDataModel, index);
-                            },
-                          );
-                        }
-                      }))
-            ],
-          )),
-    );
+                        return ListView.builder(
+                          controller: scrollController,
+                          shrinkWrap: true,
+                          itemCount: searchDataModel.data.length,
+                          itemBuilder: (context, index) {
+                            return buildListItem(searchDataModel, index);
+                          },
+                        );
+                      }
+                    }))
+          ],
+        ));
   }
 
   Widget buildListItem(SearchDataModel model, num index) {
